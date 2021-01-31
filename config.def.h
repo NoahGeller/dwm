@@ -3,19 +3,28 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const Gap default_gap        = {.isgap = 1, .realgap = 10, .gappx = 25};
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=12", "emoji:size=12" };
+static const int user_bh            = 26;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#888888";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = baralpha;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray2, col_gray1, col_gray1 },
 	[SchemeSel]  = { col_gray4, col_gray1, col_gray2 },
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -66,7 +75,7 @@ static Key keys[] = {
 	/* modifier                     key        					function        argument */
 	{ MODKEY,                       XK_p,      					spawn,          SHCMD("rofi -show run") },
 	{ MODKEY|ShiftMask,             XK_Return, 					spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,				XK_w,	   					spawn,			SHCMD("firefox") },
+	{ MODKEY|ShiftMask,				XK_w,	   					spawn,		   SHCMD("firefox") },
 	{ MODKEY,                       XK_b,      					togglebar,      {0} },
 	{ MODKEY,                       XK_j,      					focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      					focusstack,     {.i = -1 } },
@@ -88,6 +97,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, 					focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  					tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, 					tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_minus,  					setgaps,        {.i = -5 } },
+	{ MODKEY,                       XK_equal,  					setgaps,        {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_minus,  					setgaps,        {.i = GAP_RESET } },
+	{ MODKEY|ShiftMask,             XK_equal,  					setgaps,        {.i = GAP_TOGGLE} },
 	{ 0,							XF86XK_AudioMute,			spawn,			{.v = mutecmd } },
 	{ 0,							XF86XK_AudioRaiseVolume,	spawn,			{.v = volupcmd } },
 	{ 0,							XF86XK_AudioLowerVolume,	spawn,			{.v = voldowncmd } },
