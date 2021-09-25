@@ -69,7 +69,7 @@ static const Layout layouts[] = {
 /* Application launchers */
 static const char *roficmd[]	= { "rofi", "-modi", "drun", "-show", "drun", NULL };
 static const char *termcmd[]	= { "st", NULL };
-static const char *wwwcmd[]		= { "firefox", NULL };
+static const char *wwwcmd[]		= { "prime-run", "firefox", NULL };
 
 /* Brightness controls */
 static const char *brightup[]	= { "brightnessctl", "set", "5%+", NULL };
